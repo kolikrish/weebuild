@@ -12,9 +12,7 @@ import { useLenis } from "lenis/react";
 import Nav from "@/components/Nav";
 import ConditionalFooter from "@/components/ConditionalFooter";
 import AnimatedButton from "@/components/AnimatedButton";
-import FeaturedProjects from "@/components/FeaturedProjects";
 import Spotlight from "@/components/Spotlight";
-import ClientReviews from "@/components/ClientReviews";
 import CTAWindow from "@/components/CTAWindow";
 import Copy from "@/components/Copy";
 
@@ -325,14 +323,6 @@ export default function Home() {
         </div>
         <Spotlight />
       </section>
-      {/**  <section className="client-reviews-container">
-        <div className="container">
-          <div className="client-reviews-header-callout">
-            <p>Voices from our spaces</p>
-          </div>
-          <ClientReviews />
-        </div>
-      </section>*/}
       <section className="gallery-callout">
         <div className="container">
           <div className="gallery-callout-col">

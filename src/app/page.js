@@ -9,14 +9,14 @@ import CustomEase from "gsap/CustomEase";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
 
-import Nav from "@/components/Nav/Nav";
-import ConditionalFooter from "@/components/ConditionalFooter/ConditionalFooter";
-import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
-import FeaturedProjects from "@/components/FeaturedProjects/FeaturedProjects";
-import Spotlight from "@/components/Spotlight/Spotlight";
-import ClientReviews from "@/components/ClientReviews/ClientReviews";
-import CTAWindow from "@/components/CTAWindow/CTAWindow";
-import Copy from "@/components/Copy/Copy";
+import Nav from "@/components/Nav";
+import ConditionalFooter from "@/components/ConditionalFooter";
+import AnimatedButton from "@/components/AnimatedButton";
+import FeaturedProjects from "@/components/FeaturedProjects";
+import Spotlight from "@/components/Spotlight";
+import ClientReviews from "@/components/ClientReviews";
+import CTAWindow from "@/components/CTAWindow";
+import Copy from "@/components/Copy";
 
 let isInitialLoad = true;
 gsap.registerPlugin(ScrollTrigger, CustomEase);
@@ -243,8 +243,8 @@ export default function Home() {
             <div className="hero-tagline">
               <Copy animateOnScroll={false} delay={showPreloader ? 10.15 : 1}>
                 <p>
-                At WeeBuild, we merge design, motion, and interaction to build
-                digital environments that inspire and connect.
+                  At WeeBuild, we merge design, motion, and interaction to build
+                  digital environments that inspire and connect.
                 </p>
               </Copy>
             </div>
@@ -265,7 +265,7 @@ export default function Home() {
               <h1>
                 <span className="spacer">&nbsp;</span>
                 Our process unites design and development into one seamless flow,
-turning thoughtful ideas into immersive digital realities.
+                turning thoughtful ideas into immersive digital realities.
               </h1>
             </Copy>
           </div>
@@ -277,9 +277,9 @@ turning thoughtful ideas into immersive digital realities.
 
               <Copy delay={0.15}>
                 <p className="lg">
-                Every project starts with design, shaped by insight and iteration,
-refined through development, and realized in thoughtful deployment.
-Only then do we bring the brand to life.
+                  Every project starts with design, shaped by insight and iteration,
+                  refined through development, and realized in thoughtful deployment.
+                  Only then do we bring the brand to life.
                 </p>
               </Copy>
             </div>
@@ -303,8 +303,8 @@ Only then do we bring the brand to life.
                 <div className="what-we-do-tag">
                   <h3>Clarity</h3>
                 </div>
-                
-                
+
+
               </div>
             </div>
           </div>
@@ -325,7 +325,7 @@ Only then do we bring the brand to life.
         </div>
         <Spotlight />
       </section>
-     {/**  <section className="client-reviews-container">
+      {/**  <section className="client-reviews-container">
         <div className="container">
           <div className="client-reviews-header-callout">
             <p>Voices from our spaces</p>
@@ -361,8 +361,8 @@ Only then do we bring the brand to life.
             <div className="gallery-callout-copy">
               <Copy delay={0.1}>
                 <h3>
-                Our projects define our practice.
-                From innovative design to seamless development, each reflects a unique perspective and sparks new ideas.
+                  Our projects define our practice.
+                  From innovative design to seamless development, each reflects a unique perspective and sparks new ideas.
                 </h3>
               </Copy>
               <AnimatedButton label="Explore Gallery" route="/" />

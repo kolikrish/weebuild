@@ -40,15 +40,21 @@ export default function Gallery() {
 
   const [initialized, setInitialized] = useState(false);
 
+  const initTimeoutRef = useRef(null);
+
   useEffect(() => {
     const importSplitType = async () => {
-      const SplitTypeModule = await import("split-type");
-      SplitType = SplitTypeModule.default;
+      try {
+        const SplitTypeModule = await import("split-type");
+        SplitType = SplitTypeModule.default;
+      } catch (err) {
+        console.error("Failed to load split-type:", err);
+      }
 
-      setTimeout(() => {
+      initTimeoutRef.current = setTimeout(() => {
         initializeGallery();
         setInitialized(true);
-      }, 10);
+      }, 50);
     };
 
     gsap.registerPlugin(CustomEase);
@@ -57,19 +63,11 @@ export default function Gallery() {
     importSplitType();
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.removeEventListener("mousedown", handleMouseDown);
-        containerRef.current.removeEventListener(
-          "touchstart",
-          handleTouchStart
-        );
+      if (initTimeoutRef.current) {
+        clearTimeout(initTimeoutRef.current);
       }
 
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("resize", handleResize);
+      removeEventListeners();
 
       if (stateRef.current.animationFrameId) {
         cancelAnimationFrame(stateRef.current.animationFrameId);
@@ -193,52 +191,63 @@ export default function Gallery() {
 
   const setAndAnimateTitle = (title) => {
     const { titleSplit } = stateRef.current;
+    if (!projectTitleRef.current) return;
     const projectTitleElement = projectTitleRef.current.querySelector("p");
+    if (!projectTitleElement) return;
 
-    if (titleSplit) titleSplit.revert();
+    if (titleSplit && titleSplit.revert) titleSplit.revert();
     projectTitleElement.textContent = title;
 
-    stateRef.current.titleSplit = new SplitType(projectTitleElement, {
-      types: "words",
-    });
-    gsap.set(stateRef.current.titleSplit.words, { y: "100%" });
+    if (SplitType) {
+      stateRef.current.titleSplit = new SplitType(projectTitleElement, {
+        types: "words",
+      });
+      if (stateRef.current.titleSplit.words) {
+        gsap.set(stateRef.current.titleSplit.words, { y: "100%" });
+      }
+    }
   };
 
   const animateTitleIn = () => {
-    gsap.to(stateRef.current.titleSplit.words, {
-      y: "0%",
-      duration: 1,
-      stagger: 0.1,
-      ease: "power3.out",
-    });
+    if (stateRef.current.titleSplit && stateRef.current.titleSplit.words) {
+      gsap.to(stateRef.current.titleSplit.words, {
+        y: "0%",
+        duration: 0.8,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
+    }
   };
 
   const animateTitleOut = () => {
-    gsap.to(stateRef.current.titleSplit.words, {
-      y: "-100%",
-      duration: 1,
-      stagger: 0.1,
-      ease: "power3.out",
-    });
+    if (stateRef.current.titleSplit && stateRef.current.titleSplit.words) {
+      gsap.to(stateRef.current.titleSplit.words, {
+        y: "-100%",
+        duration: 0.6,
+        stagger: 0.05,
+        ease: "power3.out",
+      });
+    }
   };
 
   const playIntroAnimation = () => {
     if (stateRef.current.introAnimationPlayed) return;
+    if (!canvasRef.current) return;
 
-    const allItems = document.querySelectorAll(".item");
+    const allItems = canvasRef.current.querySelectorAll(".item");
     if (allItems.length === 0) return;
 
     stateRef.current.introAnimationPlayed = true;
 
     gsap.to(allItems, {
       scale: 1,
-      delay: 1,
+      delay: 0.1,
       duration: 0.5,
       stagger: {
-        amount: 1,
+        amount: 0.4,
         from: "random",
       },
-      ease: "power1.out",
+      ease: "power2.out",
     });
   };
 
@@ -371,8 +380,8 @@ export default function Gallery() {
     container.style.cursor = "auto";
 
     const imgSrc = item.querySelector("img").src;
-    const imgMatch = imgSrc.match(/\/img(\d+)\.jpg/);
-    const imgNum = imgMatch ? parseInt(imgMatch[1]) : 1;
+    const imgMatch = imgSrc.match(/archive-(\d+)\.jpg/);
+    const imgNum = imgMatch ? parseInt(imgMatch[1], 10) : 1;
     const titleIndex = (imgNum - 1) % items.length;
 
     setAndAnimateTitle(items[titleIndex]);
@@ -643,11 +652,38 @@ export default function Gallery() {
     }
   };
 
+  const handleWheel = (e) => {
+    const state = stateRef.current;
+    if (!state.canDrag) return;
+
+    e.preventDefault();
+    state.targetX -= e.deltaX * 0.8;
+    state.targetY -= e.deltaY * 0.8;
+  };
+
+  const removeEventListeners = () => {
+    if (containerRef.current) {
+      containerRef.current.removeEventListener("mousedown", handleMouseDown);
+      containerRef.current.removeEventListener("touchstart", handleTouchStart);
+      containerRef.current.removeEventListener("wheel", handleWheel);
+    }
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseup", handleMouseUp);
+    window.removeEventListener("touchmove", handleTouchMove);
+    window.removeEventListener("touchend", handleTouchEnd);
+    window.removeEventListener("resize", handleResize);
+    if (overlayRef.current) {
+      overlayRef.current.removeEventListener("click", handleOverlayClick);
+    }
+  };
+
   const initializeGallery = () => {
     const container = containerRef.current;
     const overlay = overlayRef.current;
 
     if (!container || !overlay) return;
+
+    removeEventListeners();
 
     if (stateRef.current.animationFrameId) {
       cancelAnimationFrame(stateRef.current.animationFrameId);
@@ -655,6 +691,7 @@ export default function Gallery() {
     }
 
     container.addEventListener("mousedown", handleMouseDown);
+    container.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
     container.addEventListener("touchstart", handleTouchStart, {
@@ -679,7 +716,7 @@ export default function Gallery() {
         <div className="overlay" id="overlay" ref={overlayRef}></div>
       </div>
       <div className="project-title" ref={projectTitleRef}>
-        <p>Hello , How are you !</p>
+        <p></p>
       </div>
     </>
   );

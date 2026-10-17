@@ -2,7 +2,7 @@
 import "../styles/TopBar.scss";
 
 import { useRef, useEffect } from "react";
-
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -11,46 +11,53 @@ import AnimatedButton from "./AnimatedButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const NAV_LINKS = [
+  { label: "Blueprints", href: "/blueprints" },
+  { label: "Spaces", href: "/spaces" },
+  { label: "Sample Space", href: "/sample-space" },
+  { label: "Studio", href: "/studio" },
+];
+
 const TopBar = () => {
   const topBarRef = useRef(null);
   const { navigateWithTransition } = useViewTransition();
-  let lastScrollY = 0;
-  let isScrolling = false;
+  const pathname = usePathname();
+  const lastScrollYRef = useRef(0);
+  const isScrollingRef = useRef(false);
 
   useEffect(() => {
     const topBar = topBarRef.current;
     if (!topBar) return;
 
     const topBarHeight = topBar.offsetHeight;
-
     gsap.set(topBar, { y: 0 });
 
     const handleScroll = () => {
-      if (isScrolling) return;
+      if (isScrollingRef.current) return;
 
-      isScrolling = true;
+      isScrollingRef.current = true;
       const currentScrollY = window.scrollY;
-      const direction = currentScrollY > lastScrollY ? 1 : -1;
+      const direction = currentScrollY > lastScrollYRef.current ? 1 : -1;
 
-      if (direction === 1 && currentScrollY > 50) {
+      if (direction === 1 && currentScrollY > 60) {
         gsap.to(topBar, {
-          y: -topBarHeight,
-          duration: 1,
+          y: -(topBarHeight + 20),
+          duration: 0.8,
           ease: "power4.out",
         });
       } else if (direction === -1) {
         gsap.to(topBar, {
           y: 0,
-          duration: 1,
+          duration: 0.8,
           ease: "power4.out",
         });
       }
 
-      lastScrollY = currentScrollY;
+      lastScrollYRef.current = currentScrollY;
 
       setTimeout(() => {
-        isScrolling = false;
-      }, 100);
+        isScrollingRef.current = false;
+      }, 80);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -60,29 +67,73 @@ const TopBar = () => {
     };
   }, []);
 
+  // Ensure navbar is revealed whenever the route changes
   useEffect(() => {
     if (topBarRef.current) {
-      gsap.set(topBarRef.current, { y: 0 });
+      gsap.to(topBarRef.current, {
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+      });
     }
-  });
+  }, [pathname]);
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    if (pathname === href) return;
+    navigateWithTransition(href);
+  };
+
+  const handleConnectClick = (e) => {
+    e.preventDefault();
+    const footer = document.querySelector(".footer");
+    if (footer) {
+      footer.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigateWithTransition("/studio");
+    }
+  };
 
   return (
-    <div className="top-bar" ref={topBarRef}>
+    <header className="top-bar" ref={topBarRef}>
       <div className="top-bar-logo">
         <a
           href="/"
-          onClick={(e) => {
-            e.preventDefault();
-            navigateWithTransition("/");
-          }}
+          onClick={(e) => handleLinkClick(e, "/")}
+          aria-label="WeeBuild Homepage"
         >
-          <img src="/logos/WeeBuild..png" alt="" />
+          <img src="/logos/WeeBuild..png" alt="WeeBuild." />
         </a>
       </div>
+
+      <nav className="top-bar-links" aria-label="Main Navigation">
+        <ul className="nav-list">
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <li key={link.href} className="nav-item">
+                <a
+                  href={link.href}
+                  className={`nav-link ${isActive ? "active" : ""}`}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
       <div className="top-bar-cta">
-        <AnimatedButton label="Connect" route="/" animate={false} />
+        <AnimatedButton
+          label="Connect"
+          route="/"
+          animate={false}
+          onClick={handleConnectClick}
+        />
       </div>
-    </div>
+    </header>
   );
 };
 

@@ -56,3 +56,4 @@ export const useViewTransition = () => {
 
   return { navigateWithTransition, router };
 };
+

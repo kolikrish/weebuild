@@ -1,10 +1,9 @@
 "use client";
-import "./studio.css";
+import "./studio.scss";
 
 import Nav from "@/components/Nav";
 import ConditionalFooter from "@/components/ConditionalFooter";
 import HowWeWork from "@/components/HowWeWork";
-import Spotlight from "@/components/Spotlight";
 import CTAWindow from "@/components/CTAWindow";
 import Copy from "@/components/Copy";
 
@@ -85,7 +84,6 @@ const page = () => {
           callout="Designs that speak through form"
           description="Each project tells a story of light, material, and rhythm. Explore how ideas take shape and grow into lasting environments."
         />
-        <Spotlight />
       </div>
       <ConditionalFooter />
     </>

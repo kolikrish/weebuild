@@ -243,22 +243,6 @@ const Nav = () => {
                   <h2>Studio (comming soon)</h2>
                 </a>
               </div>
-              {/**   <div className="link">
-                <a
-                  href="/spaces"
-                  onClick={(e) => handleLinkClick(e, "/spaces")}
-                >
-                  <h2>Our Spaces</h2>
-                </a>
-              </div>
-              <div className="link">
-                <a
-                  href="/sample-space"
-                  onClick={(e) => handleLinkClick(e, "/sample-space")}
-                >
-                  <h2>One Installation</h2>
-                </a>
-              </div>
               <div className="link">
                 <a
                   href="/blueprints"
@@ -266,7 +250,7 @@ const Nav = () => {
                 >
                   <h2>Blueprints</h2>
                 </a>
-              </div> */}
+              </div>
               <div className="link">
                 <a
                   href="/"

@@ -1,5 +1,5 @@
 "use client";
-import "./sample-space.css";
+import "./sample-space.scss";
 
 import Nav from "@/components/Nav";
 import ConditionalFooter from "@/components/ConditionalFooter";

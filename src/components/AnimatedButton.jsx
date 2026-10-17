@@ -18,6 +18,7 @@ const AnimatedButton = ({
   animate = true,
   animateOnScroll = true,
   delay = 0,
+  onClick,
 }) => {
   const { navigateWithTransition } = useViewTransition();
   const buttonRef = useRef(null);
@@ -155,6 +156,10 @@ const AnimatedButton = ({
         className="btn"
         ref={buttonRef}
         onClick={(e) => {
+          if (onClick) {
+            onClick(e);
+            return;
+          }
           e.preventDefault();
           navigateWithTransition(route);
         }}
@@ -165,7 +170,7 @@ const AnimatedButton = ({
   }
 
   return (
-    <button className="btn" ref={buttonRef}>
+    <button className="btn" ref={buttonRef} onClick={onClick}>
       {buttonContent}
     </button>
   );

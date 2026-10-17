@@ -355,7 +355,7 @@ export default function Home() {
                   From innovative design to seamless development, each reflects a unique perspective and sparks new ideas.
                 </h3>
               </Copy>
-              <AnimatedButton label="Explore Gallery" route="/" />
+              <AnimatedButton label="Explore Gallery" route="/blueprints" />
             </div>
           </div>
         </div>

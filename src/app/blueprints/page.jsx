@@ -1,3 +1,4 @@
+"use client";
 import Nav from "@/components/Nav";
 import Gallery from "@/components/Gallery";
 
@@ -13,3 +14,4 @@ const page = () => {
 };
 
 export default page;
+

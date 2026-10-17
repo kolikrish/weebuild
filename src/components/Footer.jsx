@@ -81,24 +81,6 @@ const Footer = () => {
                 >
                   <h3>Studio (coming soon)</h3>
                 </a>
-                {/**  <a
-                  href="/spaces"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigateWithTransition("/spaces");
-                  }}
-                >
-                  <h3>Our Spaces</h3>
-                </a>
-                <a
-                  href="/sample-space"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigateWithTransition("/sample-space");
-                  }}
-                >
-                  <h3>One Installation</h3>
-                </a>
                 <a
                   href="/blueprints"
                   onClick={(e) => {
@@ -107,7 +89,7 @@ const Footer = () => {
                   }}
                 >
                   <h3>Blueprints</h3>
-                </a>*/}
+                </a>
                 <a
                   href="/"
                   onClick={(e) => {

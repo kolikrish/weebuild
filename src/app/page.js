@@ -15,6 +15,7 @@ import AnimatedButton from "@/components/AnimatedButton";
 import Spotlight from "@/components/Spotlight";
 import CTAWindow from "@/components/CTAWindow";
 import Copy from "@/components/Copy";
+import Skiper from "@/components/Skiper";
 
 let isInitialLoad = true;
 gsap.registerPlugin(ScrollTrigger, CustomEase);
@@ -360,6 +361,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Skiper />
       <CTAWindow
         img="/home/home-cta-window.jpg"
         header="WeeBuild."

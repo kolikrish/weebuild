@@ -16,6 +16,7 @@ import Spotlight from "@/components/Spotlight";
 import CTAWindow from "@/components/CTAWindow";
 import Copy from "@/components/Copy";
 import Skiper from "@/components/Skiper";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 let isInitialLoad = true;
 gsap.registerPlugin(ScrollTrigger, CustomEase);
@@ -284,26 +285,53 @@ export default function Home() {
             </div>
             <div className="what-we-do-col">
               <div className="what-we-do-tags" ref={tagsRef}>
-                <div className="what-we-do-tag">
+                <AnimatedTooltip
+                  variant="cora"
+                  content="Identity systems that resonate and endure across touchpoints."
+                  className="what-we-do-tag"
+                >
                   <h3>Branding</h3>
-                </div>
-                <div className="what-we-do-tag">
+                </AnimatedTooltip>
+
+                <AnimatedTooltip
+                  variant="smaug"
+                  content="Tactile digital experiences sculpted with intentional precision."
+                  className="what-we-do-tag"
+                >
                   <h3>UI/UX</h3>
-                </div>
-                <div className="what-we-do-tag">
+                </AnimatedTooltip>
+
+                <AnimatedTooltip
+                  variant="malva"
+                  content="Pushing spatial and technical boundaries through bold creative exploration."
+                  className="what-we-do-tag"
+                >
                   <h3>Innovation</h3>
-                </div>
-                <div className="what-we-do-tag">
+                </AnimatedTooltip>
+
+                <AnimatedTooltip
+                  variant="dori"
+                  content="Immersive atmospheres crafted for deep and intuitive human connection."
+                  className="what-we-do-tag"
+                >
                   <h3>Experience</h3>
-                </div>
-                <div className="what-we-do-tag">
+                </AnimatedTooltip>
+
+                <AnimatedTooltip
+                  variant="indis"
+                  content="Purpose-driven foundations defining every architectural decision."
+                  className="what-we-do-tag"
+                >
                   <h3>Strategy</h3>
-                </div>
-                <div className="what-we-do-tag">
+                </AnimatedTooltip>
+
+                <AnimatedTooltip
+                  variant="gram"
+                  content="Distilling complex briefs into pure, essential, and poetic forms."
+                  className="what-we-do-tag"
+                >
                   <h3>Clarity</h3>
-                </div>
-
-
+                </AnimatedTooltip>
               </div>
             </div>
           </div>

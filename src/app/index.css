@@ -110,11 +110,35 @@
 }
 
 .what-we-do .what-we-do-tag {
-  display: inline-block;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
   padding: 1rem 2rem;
-  margin: 0 0.5rem 0.5rem 0;
+  margin: 0 0.6rem 0.6rem 0;
   border: 1px solid var(--base-400);
   border-radius: 4rem;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  vertical-align: middle;
+}
+
+.what-we-do .what-we-do-tag:hover {
+  border-color: #C2F84F;
+  background-color: rgba(194, 248, 79, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(194, 248, 79, 0.12);
+}
+
+.what-we-do .what-we-do-tag h3 {
+  margin: 0;
+  color: inherit;
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.075rem;
+  line-height: 1.2;
+  pointer-events: none;
+  transition: color 0.3s ease;
 }
 
 @media (max-width: 1000px) {
@@ -131,8 +155,12 @@
   }
 
   .what-we-do .what-we-do-tag {
-    padding: 0.75rem 1.5rem;
-    margin: 0 0.25rem 0.25rem 0;
+    padding: 0.85rem 1.85rem;
+    margin: 0 0.35rem 0.35rem 0;
+  }
+
+  .what-we-do .what-we-do-tag h3 {
+    font-size: 1.75rem;
   }
 }
 
